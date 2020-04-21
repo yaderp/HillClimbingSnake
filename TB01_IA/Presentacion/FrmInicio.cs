@@ -15,6 +15,7 @@ namespace TB01_IA.Presentacion
     {
 
         List<DatosViewModel> vmLista = new List<DatosViewModel>();
+
         int Contador = Variables.TiempoEspera;
         int Velocidad = 50;
 

@@ -43,7 +43,7 @@ namespace TB01_IA.Model
 
             return AchMapa;
         }
-
+        
         public void setMapa(List<MapaViewModel> AchMapa)
         {
             try
@@ -126,5 +126,16 @@ namespace TB01_IA.Model
 
             return lista;
         }
+
+        //public List<DatosViewModel> ListaDimension()
+        //{
+        //    List<DatosViewModel> lista = new List<DatosViewModel>();
+
+        //    lista.Add(new DatosViewModel(0, 10, 5));
+        //    lista.Add(new DatosViewModel(1, 15,8));
+        //    lista.Add(new DatosViewModel(2, 20,11));
+        //    lista.Add(new DatosViewModel(4, 25,15));
+        //    return lista;
+        //}
     }
 }

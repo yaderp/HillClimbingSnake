@@ -41,7 +41,7 @@
             // pictureBoxJugar
             // 
             this.pictureBoxJugar.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxJugar.Image")));
-            this.pictureBoxJugar.Location = new System.Drawing.Point(477, 234);
+            this.pictureBoxJugar.Location = new System.Drawing.Point(477, 231);
             this.pictureBoxJugar.Name = "pictureBoxJugar";
             this.pictureBoxJugar.Size = new System.Drawing.Size(100, 30);
             this.pictureBoxJugar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -67,7 +67,7 @@
             this.comboBoxVelocidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxVelocidad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(58)))), ((int)(((byte)(115)))));
             this.comboBoxVelocidad.FormattingEnabled = true;
-            this.comboBoxVelocidad.Location = new System.Drawing.Point(308, 234);
+            this.comboBoxVelocidad.Location = new System.Drawing.Point(308, 231);
             this.comboBoxVelocidad.Name = "comboBoxVelocidad";
             this.comboBoxVelocidad.Size = new System.Drawing.Size(114, 24);
             this.comboBoxVelocidad.TabIndex = 3;

@@ -14,6 +14,8 @@ namespace TB01_IA
 {
     public partial class FrmJuego : Form
     {
+        #region  Variables Locales
+
         int Velocidad;
         List<CaminoViewModel> vmLista;
         List<ImgViewModel> vmListaImg;
@@ -27,6 +29,8 @@ namespace TB01_IA
 
         int CantVidas = Variables.VIDAS;
         bool ActLineas = false;
+        #endregion
+
         public FrmJuego(int speed)
         {
             this.Velocidad = speed;
@@ -38,6 +42,7 @@ namespace TB01_IA
             DatosIniciales();
         }
 
+        #region Cargar Juego
         private void DatosIniciales()
         {
             timerJuego.Interval = Velocidad;
@@ -69,6 +74,7 @@ namespace TB01_IA
             datos.setMapa(vmListaMapa);
             datos.setImg(vmListaImg);
         }
+        #endregion
 
         #region Graficos Juego
         private void Gestor_DibujaSnake()
@@ -76,7 +82,7 @@ namespace TB01_IA
             Graphics g = panelCuadro.CreateGraphics();
             BufferedGraphicsContext espacioBuffer = BufferedGraphicsManager.Current;
             BufferedGraphics Buffer = espacioBuffer.Allocate(g, this.ClientRectangle);
-            Buffer.Graphics.Clear(Color.FromArgb(210, 214, 230));
+            Buffer.Graphics.Clear(Color.FromArgb(0, 64, 0));
 
             DibujarTodo(Buffer.Graphics);
             Buffer.Render(g);
@@ -146,6 +152,7 @@ namespace TB01_IA
 
         #endregion
 
+        #region Gestor Juego
         private void timerJuego_Tick(object sender, EventArgs e)
         {
             Gestor_Juego();
@@ -201,6 +208,9 @@ namespace TB01_IA
             }
         }
 
+        #endregion
+
+        #region Funciones basicas
         private void MoverSnake(CaminoViewModel vmCamino)
         {
             if (vmCamino.Distancia == 0)
@@ -309,6 +319,6 @@ namespace TB01_IA
 
             Gestor_DibujaSnake();
         }
-
+        #endregion
     }
 }

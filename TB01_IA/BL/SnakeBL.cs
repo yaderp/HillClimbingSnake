@@ -130,14 +130,6 @@ namespace TB01_IA.BL
                 temp.vmPadre = vmPadre;
                 vmCamino.Add(temp);
             }
-            //izquierda
-
-            temp = ValidaCamino(-1, 0, Variables.IZQUIERDA);
-            if (temp != null)
-            {
-                temp.vmPadre = vmPadre;
-                vmCamino.Add(temp);
-            }
 
             //Abajo
             temp = ValidaCamino(0, 1, Variables.ABAJO);
@@ -147,6 +139,14 @@ namespace TB01_IA.BL
                 vmCamino.Add(temp);
             }
 
+            //izquierda
+
+            temp = ValidaCamino(-1, 0, Variables.IZQUIERDA);
+            if (temp != null)
+            {
+                temp.vmPadre = vmPadre;
+                vmCamino.Add(temp);
+            }
             //arriba
             temp = ValidaCamino(0, -1, Variables.ARRIBA);
             if (temp != null)

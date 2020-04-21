@@ -8,6 +8,8 @@ namespace TB01_IA
 {
     public class Variables
     {
+
+
         // Ubicacion Imagen  4 * 3
         public static string NomImagen = "Imagen/snakeapple.png";
 
@@ -24,7 +26,6 @@ namespace TB01_IA
         public static int CABEZA = 0;
         public static int CUERPO = 1;
         public static int MANZANA = 2;
-        public static int CAB_DEAR = 3;
         
 
         // tamaño de las imagenes
@@ -53,7 +54,6 @@ namespace TB01_IA
 
         //Cantidad de vidas
         public static int VIDAS = 5;
-
 
         // dimension del mapa
         public static int FILA = 15;
