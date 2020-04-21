@@ -16,7 +16,7 @@ namespace TB01_IA
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmInicio());
+            Application.Run(new Presentacion.FrmInicio());
         }
     }
 }

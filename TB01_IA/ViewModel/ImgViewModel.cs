@@ -25,6 +25,16 @@ namespace TB01_IA.ViewModel
             this.Indy = Indy;
             this.PosXY = Y * Variables.COLUMNA + X;
         }
+
+        public ImgViewModel(int X, int Y)
+        {
+            this.X = X;
+            this.Y = Y;
+            this.Direccion = 0;
+            this.Indy = 1;
+            this.PosXY = Y * Variables.COLUMNA + X;
+        }
+
         public ImgViewModel(int Tipo)
         {
             this.Direccion = Variables.DERECHA;

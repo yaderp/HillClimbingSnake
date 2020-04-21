@@ -12,23 +12,24 @@ using TB01_IA.BL;
 
 namespace TB01_IA
 {
-    public partial class FrmInicio : Form
+    public partial class FrmJuego : Form
     {
-        List<CaminoViewModel> vmLista = null;
-
-        List<ImgViewModel> vmListaImg = new List<ImgViewModel>();
-        List<MapaViewModel> vmListaMapa = new List<MapaViewModel>();
-
+        int Velocidad;
+        List<CaminoViewModel> vmLista;
+        List<ImgViewModel> vmListaImg;
+        List<MapaViewModel> vmListaMapa;
 
         ImgViewModel Serpiente = new ImgViewModel(Variables.CABEZA);
         ImgViewModel Manzana = new ImgViewModel(Variables.MANZANA);
 
         int TamSnake = 1;
         int MaxPunto = 0;
-        int CantVidas = Variables.VIDAS;
 
-        public FrmInicio()
+        int CantVidas = Variables.VIDAS;
+        bool ActLineas = false;
+        public FrmJuego(int speed)
         {
+            this.Velocidad = speed;
             InitializeComponent();
         }
 
@@ -39,9 +40,14 @@ namespace TB01_IA
 
         private void DatosIniciales()
         {
-            vmLista = new List<CaminoViewModel>();
-
+            timerJuego.Interval = Velocidad;
             TamSnake = 1;
+            MaxPunto = 0;
+            
+            vmLista = new List<CaminoViewModel>();
+            vmListaImg = new List<ImgViewModel>();
+            vmListaMapa = new List<MapaViewModel>();
+
             for (int i = 0; i < Variables.FILA; i++)
             {
                 for (int j = 0; j < Variables.COLUMNA; j++)
@@ -50,14 +56,22 @@ namespace TB01_IA
                     vmListaMapa.Add(temp);
                 }
             }
-
+            
             vmListaImg.Add(Serpiente);
             vmListaMapa[Serpiente.PosXY].Tipo = Variables.Tipo_Snake;
-            vmListaMapa[Manzana.PosXY].Tipo = Variables.Tipo_Apple;        
+            vmListaMapa[Manzana.PosXY].Tipo = Variables.Tipo_Apple;
+
+            _SaveArchivos();
+        }
+
+        private void _SaveArchivos() {
+            Model.Datos datos = new Model.Datos();
+            datos.setMapa(vmListaMapa);
+            datos.setImg(vmListaImg);
         }
 
         #region Graficos Juego
-        private void Gestor_Snake()
+        private void Gestor_DibujaSnake()
         {
             Graphics g = panelCuadro.CreateGraphics();
             BufferedGraphicsContext espacioBuffer = BufferedGraphicsManager.Current;
@@ -70,18 +84,17 @@ namespace TB01_IA
 
         private void DibujarTodo(Graphics dibujo)
         {
+            DibujarFondo(dibujo);
 
-            foreach (var item in vmListaMapa)
-            {
-                DibujarCuadro(dibujo, item.X, item.Y, item.Tipo);
-            }
-            //DibujarFondo(dibujo);
+            if (ActLineas)
+                DibujarCuadro(dibujo);
+
             Dibujar(dibujo, Manzana);
 
             foreach (var item in vmListaImg)
-            {
                 Dibujar(dibujo, item);
-            }
+
+            DibujarVidas();
         }
 
         private void Dibujar(Graphics dibujo, ImgViewModel dato)
@@ -111,42 +124,35 @@ namespace TB01_IA
 
                 Bitmap imgtransparente = new Bitmap(imagen);
                 imgtransparente.MakeTransparent(imgtransparente.GetPixel(1, 1));
-                Rectangle porcionAUsar = new Rectangle(0, 0, 30, 30);
-                dibuj_Cor.DrawImage(imgtransparente, 500 + 40 * i, 40, porcionAUsar, GraphicsUnit.Pixel);
+                Rectangle porcionAUsar = new Rectangle(0, 0, 25, 20);
+                dibuj_Cor.DrawImage(imgtransparente, 20 + 40 * i, 20, porcionAUsar, GraphicsUnit.Pixel);
             }
         }
-        private void DibujarCuadro(Graphics dibujo, int px, int py, int tipo)
+        private void DibujarCuadro(Graphics dibujo)
         {
-
-            SolidBrush letra = new SolidBrush(Color.FromArgb(37, 56, 125));
-            Pen lapiz = new Pen(Color.Violet);
             SolidBrush pincel = new SolidBrush(Color.FromArgb(210, 214, 230));
+            Pen lapiz = new Pen(Color.Violet);
             Font fuente = new Font("Arial", 10);
+            SolidBrush letra = new SolidBrush(Color.FromArgb(37, 56, 125));
+            
 
-            if (tipo == 1)
-                pincel = new SolidBrush(Color.FromArgb(100, 255, 100));
-
-            if (tipo == 2)
-                pincel = new SolidBrush(Color.FromArgb(255, 100, 100));
-
-
-            dibujo.FillRectangle(pincel, new Rectangle(px * Variables.DIM, py * Variables.DIM, Variables.ANCHO, Variables.ALTO));
-
-            dibujo.DrawRectangle(lapiz, px * Variables.ANCHO, py * Variables.DIM, Variables.DIM, Variables.ALTO);
-
-            dibujo.DrawString((py * Variables.COLUMNA + px).ToString(), fuente, letra, px * Variables.ANCHO, py * Variables.ALTO);
+            foreach (var item in vmListaMapa)
+            {
+                //dibujo.FillRectangle(pincel, new Rectangle(px * Variables.DIM, py * Variables.DIM, Variables.ANCHO, Variables.ALTO));
+                dibujo.DrawRectangle(lapiz, item.X * Variables.ANCHO, item.Y * Variables.DIM, Variables.DIM, Variables.ALTO);
+                dibujo.DrawString((item.Y * Variables.COLUMNA + item.X).ToString(), fuente, letra, item.X * Variables.ANCHO, item.Y * Variables.ALTO);
+            }            
         }
 
         #endregion
 
         private void timerJuego_Tick(object sender, EventArgs e)
         {
-            HillClimbing();
+            Gestor_Juego();
         }
 
-        private void HillClimbing()
+        private void Gestor_Juego()
         {
-
             if (vmLista.Count() == 0)
             {
                 Jugar_Snake();
@@ -154,17 +160,18 @@ namespace TB01_IA
             else
             {
                 MoverSnake(vmLista.First());
-                Gestor_Snake();
+                
+                Gestor_DibujaSnake();
                 vmLista.RemoveAt(0);
+                labelRecorrido.Text = "Recorrido : " + vmLista.Count();
             }
-
         }
 
         private void Jugar_Snake()
         {
+            _SaveArchivos();
             SnakeBL sbl = new SnakeBL();
-
-            var hallado = sbl.ListaCamino(vmListaMapa, vmListaImg, Manzana);
+            var hallado = sbl.ListaCamino(Manzana);
 
             if (hallado != null)
             {
@@ -177,14 +184,25 @@ namespace TB01_IA
                 vmLista = hallado;
             }
             else {
-                timerJuego.Enabled = true;
+                if (MaxPunto < TamSnake)
+                    MaxPunto = TamSnake;
+
+                labelMaxPunto.Text = "Max Puntos : " + MaxPunto;
+                
+                DatosIniciales();
+                
+                if (CantVidas == 0) {
+                    timerJuego.Enabled = false;
+                    MessageBox.Show("FIN DEL JUEGO", "SALIR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
+
+                CantVidas--;
             }
         }
 
         private void MoverSnake(CaminoViewModel vmCamino)
         {
-            
-
             if (vmCamino.Distancia == 0)
             {
                 ComerManzana(vmCamino.X, vmCamino.Y, vmCamino.Direccion);
@@ -214,7 +232,6 @@ namespace TB01_IA
 
         private void ComerManzana(int posx, int posy, int direc)
         {
-            /////////////////// AGREGAR COLA /////////////////////
             ImgViewModel Temp = new ImgViewModel(posx, posy, direc, Variables.CABEZA);
 
             vmListaImg[0].Indy = Variables.CUERPO;
@@ -226,13 +243,11 @@ namespace TB01_IA
             Serpiente = Temp;
             TamSnake++;
             labelPuntos.Text = "Puntos : " + TamSnake;
-
             AgregaManzana();
         }
 
         private void AgregaManzana()
         {
-            ///////////////  AGREGAR MANZANA ///////////////////////
             bool Act_Ap = true;
             Random rnd = new Random();
             int posA = rnd.Next(0, Variables.TOTAL);
@@ -253,8 +268,6 @@ namespace TB01_IA
                 }
             }
 
-            
-
             Manzana.X = vmListaMapa[posA].X;
             Manzana.Y = vmListaMapa[posA].Y;
             Manzana.PosXY = vmListaMapa[posA].PosXY;
@@ -262,5 +275,40 @@ namespace TB01_IA
 
             vmListaMapa[Manzana.PosXY].Tipo = Variables.Tipo_Apple;
         }
+
+
+        private void FrmInicio_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                if (ActLineas)
+                {
+                    ActLineas = false;
+                }
+                else {
+                    ActLineas = true;
+                }
+            }
+
+            if (e.KeyData == Keys.Space)
+            {
+                if (timerJuego.Enabled)
+                {
+                    timerJuego.Enabled = false;
+                }
+                else
+                {
+                    timerJuego.Enabled = true;
+                }
+            }
+
+            if (e.KeyData == Keys.Escape)
+            {
+                DatosIniciales();
+            }
+
+            Gestor_DibujaSnake();
+        }
+
     }
 }

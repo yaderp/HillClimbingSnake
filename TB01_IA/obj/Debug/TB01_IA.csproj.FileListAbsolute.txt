@@ -7,3 +7,13 @@ D:\ydRSoft_Sistema_Sondor\PROGRAM\TB01_IA\TB01_IA\obj\Debug\TB01_IA.Properties.R
 D:\ydRSoft_Sistema_Sondor\PROGRAM\TB01_IA\TB01_IA\obj\Debug\TB01_IA.csproj.GenerateResource.Cache
 D:\ydRSoft_Sistema_Sondor\PROGRAM\TB01_IA\TB01_IA\obj\Debug\TB01_IA.exe
 D:\ydRSoft_Sistema_Sondor\PROGRAM\TB01_IA\TB01_IA\obj\Debug\TB01_IA.pdb
+D:\UPC2020\HillClimbingSnake\TB01_IA\bin\Debug\TB01_IA.exe.config
+D:\UPC2020\HillClimbingSnake\TB01_IA\bin\Debug\TB01_IA.exe
+D:\UPC2020\HillClimbingSnake\TB01_IA\bin\Debug\TB01_IA.pdb
+D:\UPC2020\HillClimbingSnake\TB01_IA\obj\Debug\TB01_IA.Presentacion.FrmInicio.resources
+D:\UPC2020\HillClimbingSnake\TB01_IA\obj\Debug\TB01_IA.FrmJuego.resources
+D:\UPC2020\HillClimbingSnake\TB01_IA\obj\Debug\TB01_IA.Properties.Resources.resources
+D:\UPC2020\HillClimbingSnake\TB01_IA\obj\Debug\TB01_IA.csproj.GenerateResource.Cache
+D:\UPC2020\HillClimbingSnake\TB01_IA\obj\Debug\TB01_IA.exe
+D:\UPC2020\HillClimbingSnake\TB01_IA\obj\Debug\TB01_IA.pdb
+D:\UPC2020\HillClimbingSnake\TB01_IA\obj\Debug\TB01_IA.csprojResolveAssemblyReference.cache

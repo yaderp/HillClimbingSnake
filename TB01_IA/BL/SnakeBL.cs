@@ -12,38 +12,24 @@ namespace TB01_IA.BL
         private List<CaminoViewModel> ListaBusqueda = null;
         private List<CaminoViewModel> vmLista = null;
 
-        private List<ImgViewModel> ListaImg =null;
+        private List<ImgViewModel> ListaImg = null;
         private List<MapaViewModel> ListaMapa = null;
-
-        private List<ImgViewModel> ListaImg_copy = null;
-        private List<MapaViewModel> ListaMapa_copy = null;
 
         private ImgViewModel vmSerpiente = null;
         private ImgViewModel vmManzana = null;
 
         int TamSnake = 0;
-        public List<CaminoViewModel> ListaCamino(List<MapaViewModel> LstaMpa, List<ImgViewModel> LstaImg, ImgViewModel manza)
+
+        private void _UpdateArchivos()
         {
+            Model.Datos datos = new Model.Datos();
+            ListaMapa = datos.getMapa();
+            ListaImg= datos.getImg();
+        }
 
-            ListaMapa = new List<MapaViewModel>();
-            ListaMapa_copy = new List<MapaViewModel>();
-            foreach (var item in LstaMpa)
-            {
-                MapaViewModel tempm = new MapaViewModel(item.X, item.Y,item.Tipo);
-                MapaViewModel temp_Copy = new MapaViewModel(item.X, item.Y, item.Tipo);
-                ListaMapa.Add(tempm);
-                ListaMapa_copy.Add(temp_Copy);
-            }
-
-            ListaImg = new List<ImgViewModel>();
-            ListaImg_copy = new List<ImgViewModel>();
-            foreach (var item in LstaImg)
-            {
-                ImgViewModel temoi = new ImgViewModel(item.X, item.Y, item.Direccion, item.Indy);
-                ImgViewModel temo_copy = new ImgViewModel(item.X, item.Y, item.Direccion, item.Indy);
-                ListaImg.Add(temoi);
-                ListaImg_copy.Add(temo_copy);
-            }
+        public List<CaminoViewModel> ListaCamino(ImgViewModel manza)
+        {
+            _UpdateArchivos();
 
             vmSerpiente = ListaImg[0];
             vmManzana = manza;
@@ -80,20 +66,7 @@ namespace TB01_IA.BL
                 }
 
                 var hallado = BuscarManzana(ListaBusqueda[i]);
-
-                ListaMapa = new List<MapaViewModel>();
-                foreach (var item in ListaMapa_copy)
-                {
-                    MapaViewModel tempm = new MapaViewModel(item.X, item.Y);
-                    ListaMapa.Add(tempm);
-                }
-
-                ListaImg = new List<ImgViewModel>();
-                foreach (var item in ListaImg_copy)
-                {
-                    ImgViewModel temoi = new ImgViewModel(item.X, item.Y, item.Direccion, item.Indy);
-                    ListaImg.Add(temoi);
-                }
+                _UpdateArchivos();
 
                 vmSerpiente = ListaImg[0];
 
@@ -109,8 +82,7 @@ namespace TB01_IA.BL
             }
             // No mas jugadas
         }
-
-
+        
         private void GuardarCamino(CaminoViewModel vmCamino)
         {
 

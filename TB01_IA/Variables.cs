@@ -25,18 +25,13 @@ namespace TB01_IA
         public static int CUERPO = 1;
         public static int MANZANA = 2;
         public static int CAB_DEAR = 3;
-        // tamañano de cuadrado
-        public static int DIM = 40;
+        
 
         // tamaño de las imagenes
         public static int ANCHO = 40;
         public static int ALTO = 40;
 
-        // dimension del mapa
-        public static int FILA = 10;
-        public static int COLUMNA = 20;
-
-        public static int TOTAL = FILA * COLUMNA;
+        
 
         // Variables Iniciales
 
@@ -53,18 +48,23 @@ namespace TB01_IA
         public static int Tipo_Snake = 1;
         public static int Tipo_Apple = 2;
 
+        // tamañano de cuadrado
+        public static int DIM = 40;
 
         //Cantidad de vidas
         public static int VIDAS = 5;
 
-        public static int ANCHO_MAPA = 800;
-        public static int ALTO_MAPA = 400;
+
+        // dimension del mapa
+        public static int FILA = 15;
+        public static int COLUMNA = 25;
+
+        public static int TOTAL = FILA * COLUMNA;
+
+        public static int ANCHO_MAPA = COLUMNA * DIM;
+        public static int ALTO_MAPA = FILA * DIM;
 
 
-        public static int Mov_Choque = -1;
-        public static int Mov_Come = 0;
-
-
-        public static int CantEspacios = 3;
+        public static int TiempoEspera = 10;
     }
 }

@@ -16,7 +16,6 @@ namespace TB01_IA.ViewModel
         public int Direccion { set; get; }
         public int Espacio { set; get; }
 
-
         public MapaViewModel(int X, int Y, int Tipo)
         {
             this.X = X;
@@ -25,7 +24,7 @@ namespace TB01_IA.ViewModel
             this.PosXY = Y * Variables.COLUMNA + X;
             this.Distancia = 0;
         }
-
+        
         public MapaViewModel(int X, int Y)
         {
             this.X = X;
